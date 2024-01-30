@@ -1,0 +1,28 @@
+<launch>
+
+  <node name="image_publisher" pkg="hrii_vo" type="image_publisher.py" />
+  <node name="web_imu" pkg="hrii_vo" type="web_imu.py" />
+  <!-- <node name="image_publisher" pkg="hrii_vo" type="image_publisher.py" output="screen" /> -->
+  <!-- <node name="web_imu" pkg="hrii_vo" type="web_imu.py" output="screen" /> -->
+  <node name="imu_filter_madgwick" pkg="imu_filter_madgwick" type="imu_filter_node" output="screen">
+    <param name="use_mag" value="false" />
+    <param name="publish_tf" value="false" />
+    <param name="world_frame" value="enu" />
+    <remap from="/imu/data_raw" to="/camera/imu" />
+    <remap from="/imu/data" to="/rtabmap/imu" />
+  </node>
+  <!-- <node pkg="image_rotate" type="image_rotate" name="rotate_node">
+    <remap from="/left_raw/color" to="/left/image_raw"/>
+    <param name="angle" value="-1.5708"/> 
+    <param name="interpolation" value="bilinear"/>
+    <param name="output_frame_id" value="rotated_image"/>
+  </node> -->
+  <!-- <node name="stereo_image_proc" pkg="stereo_image_proc" type="stereo_image_proc" ns="stereo">
+     <remap from="left/image_raw" to="/left_image_raw" />
+     <remap from="right/image_raw" to="/right_image_raw" />
+     <remap from="left/camera_info" to="/left_camera_info" />
+     <remap from="right/camera_info" to="/right_camera_info" />
+    
+   </node> -->
+
+</launch>

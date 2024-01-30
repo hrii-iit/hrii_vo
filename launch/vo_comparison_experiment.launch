@@ -1,0 +1,65 @@
+<?xml version="1.0"?>
+<launch>
+
+    <!-- General parameters -->
+    <arg name="interface_type" default="$(optenv INTERFACE_TYPE SIMULATION)"/>
+    <arg name="launch_rviz" default="false"/>
+
+    <!-- General simulation parameters -->
+    <arg name="launch_gazebo_gui" default="true"/>
+
+    <!-- General robot parameters -->
+    <arg name="id_robot" default="franka_a"/>
+    <arg name="arm_id" default="$(arg id_robot)_franka"/>
+    <arg name="transmission_type_robot_a" default="effort"/>
+    <arg name="launch_gripper" default="no_gripper"/>
+    <!-- <arg name="launch_gripper_robot_a" default=""/> -->
+    <!-- Use "franka_emika_franka_gripper" or "franka_emika_no_gripper" -->
+    <arg name="robot_interface_config_file_robot_a" default="$(find hrii_franka_interface)/config/franka_emika_no_gripper.yaml"/>
+    <arg name="xacro_robot_a" default="$(find hrii_franka_description)/robots/panda_arm.urdf.xacro"/>
+
+    <!-- Robot hardware parameters -->
+    <arg name="franka_robot_ip_robot_a" default="$(optenv ROBOT_ARM_IP 172.16.0.101)"/>
+
+    <!-- Controller parameter -->
+    <arg name="controller_type_robot_a" default="cartesian_impedance_controller"/>
+    <arg name="controller_args_robot_a" default=""/>
+
+    <!-- Load franka generic controller-->
+<!--    <include file="$(find hrii_franka_launcher)/launch/single_franka_generic_controller.launch" pass_all_args="true"/>-->
+
+    <!-- Needed for admittance controller -->
+    <param name="/interface_config_file_path" value="$(find franka_example_controllers)/config/franka_no_gripper.yaml" />
+
+    <group ns="$(arg id_robot)">
+
+        <!-- <node name="rqt_reconfigure" pkg="rqt_reconfigure" type="rqt_reconfigure" required="false" /> -->
+
+        <!-- Franka Gripper -->
+        <!-- <node name="gripper_srv_node" pkg="hrii_gri_interface" type="gripper_srv_node" required="false" output="screen">
+            <param name="interface_type" value="$(arg interface_type)"/>
+            <param name="gripper_ip" value="/dev/ttyUSB0"/>
+            <param name="gripper_type" value="HRII::ROBOTIQ::Robotiq2FGripperInterface"/>
+            <param name="default_speed" value="100"/>
+            <param name="default_force" value="30"/>
+        </node> -->
+
+        <include file="$(find franka_control)/launch/franka_control.launch" >
+            <arg name="robot_ip" value="$(arg franka_robot_ip_robot_a)" />
+            <arg name="robot_id" value="$(arg id_robot)" />
+            <arg name="load_gripper" value="false" />
+            <!-- <arg name="launch_gripper" value="robotiq_2f85" /> -->
+        </include>
+
+        <rosparam command="load" file="$(find franka_example_controllers)/config/franka_example_controllers.yaml" subst_value="true"/>
+        <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false" output="screen"  args="cartesian_pose_example_controller"/>
+        <!-- <node name="stopped_controller_spawner" pkg="controller_manager" type="spawner" respawn="false" output="screen"  args="stopped  cartesian_admittance_controller"/> -->
+
+
+        <!-- Finite State Machine -->
+        <node name="only_translation" pkg="hrii_vo" type="only_translation" required="false" output="screen"/>
+        <node name="logging_node" pkg="hrii_vo" type="logging_node" required="false" output="screen"/>
+
+    </group>
+
+</launch>

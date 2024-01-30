@@ -1,0 +1,38 @@
+<launch>
+
+    <!-- Start nodelet manager -->
+    <node pkg="nodelet" type="nodelet" name="my_manager" args="manager" output="screen"/>
+
+    <!-- Load nodelet -->
+    <node pkg="nodelet" type="nodelet" name="my_nodelet" args="load depth_image_proc/register my_manager --no-bond standalone_nodelet:=true rgb/camera_info:=/camera/color/camera_info depth/camera_info:=/camera/depth/camera_info depth/image_rect:=/camera/depth/image_rect_raw" output="screen"/>
+
+    <!-- Start imu_filter_node -->
+    <node pkg="imu_filter_madgwick" type="imu_filter_node" name="imu_filter" output="screen">
+        <param name="use_mag" value="false"/>
+        <param name="publish_tf" value="false"/>
+        <param name="world_frame" value="enu"/>
+        <remap from="/imu/data_raw" to="/camera/imu"/>
+        <remap from="/imu/data" to="/rtabmap/imu"/>
+    </node>
+
+    <!-- Start compress.py -->
+    <node pkg="hrii_vo" type="compress.py" name="compress" output="screen"/>
+
+    <!-- Used for making teleoperation on impedane controller -->
+    <node pkg="hrii_vo" type="vis.py" name="pose_stamped_subscriber" output="screen" />
+
+    <!-- Launch rtabmap_ros -->
+    <include file="$(find rtabmap_ros)/launch/rtabmap.launch">
+        <arg name="rtabmap_args" value="--delete_db_on_start --Optimizer/GravitySigma 0.3"/>
+        <arg name="depth_topic" value="/depth_registered/image_rect"/>
+        <arg name="rgb_topic" value="/cam/color/image_raw"/>
+        <arg name="camera_info_topic" value="/camera/color/camera_info"/>
+        <arg name="approx_sync" value="true"/>
+        <arg name="wait_imu_to_init" value="true"/>
+        <arg name="imu_topic" value="/rtabmap/imu"/>
+    </include>
+
+
+    
+
+</launch>

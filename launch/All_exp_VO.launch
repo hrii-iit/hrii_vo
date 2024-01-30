@@ -1,0 +1,16 @@
+<launch xmlns="http://www.ros.org/reload_launch">
+  
+
+  
+    <!-- Launch zed2i.launch -->
+    <include file="$(find hrii_vo)/launch/realsense_test.launch"/>
+    
+
+    <!-- Launch rtabmap.launch with arguments -->
+    <include file="$(find hrii_vo)/launch/zed_test.launch"/>
+
+    <include file="$(find hrii_vo)/launch/visual_connector.launch"/>
+
+  
+
+</launch>

@@ -1,0 +1,33 @@
+<launch>
+  <arg name="namespace" default="device_S" />
+
+  <group ns="$(arg namespace)">
+
+  <!-- get topics of raw image left and right and their info -->
+   <include file="$(find zed_wrapper)/launch/zed2i.launch" />
+
+  <!-- Run stereo_image_proc with specified topics and namespace -->
+   <node name="stereo_image_proc" pkg="stereo_image_proc" type="stereo_image_proc" ns="stereo">
+     <remap from="left/image_raw" to="/$(arg namespace)/zed2i/zed_node/left_raw/image_raw_color" />
+     <remap from="right/image_raw" to="/$(arg namespace)/zed2i/zed_node/right_raw/image_raw_color" />
+     <remap from="left/camera_info" to="/$(arg namespace)/zed2i/zed_node/left_raw/camera_info" />
+     <remap from="right/camera_info" to="/$(arg namespace)/zed2i/zed_node/right_raw/camera_info" />
+    
+   </node>
+    <!-- Used for making teleoperation on impedane controller -->
+   <node pkg="hrii_vo" type="vis.py" name="pose_stamped_subscriber" output="screen" />
+
+  <!-- Launch RTAB-Map with specified topics and arguments -->
+   <include file="$(find rtabmap_ros)/launch/rtabmap.launch">
+     <arg name="stereo" value="true" />
+     <arg name="left_image_topic" value="/$(arg namespace)/stereo/left/image_rect" />
+     <arg name="right_image_topic" value="/$(arg namespace)/stereo/right/image_rect" />
+     <arg name="left_camera_info_topic" value="/$(arg namespace)/zed2i/zed_node/left_raw/camera_info" />
+     <arg name="right_camera_info_topic" value="/$(arg namespace)/zed2i/zed_node/right_raw/camera_info" />
+     <arg name="frame_id" value="base_link" />
+     <arg name="rtabmap_args" value="-d" />
+     <arg name="wait_imu_to_init" value="true" />
+     <arg name="imu_topic" value="/$(arg namespace)/zed2i/zed_node/imu/data" />
+   </include>
+  </group> 
+</launch>

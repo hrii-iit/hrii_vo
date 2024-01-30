@@ -1,0 +1,4 @@
+<launch>
+  <node pkg="hrii_vo" type="vis.py" name="visual_connector" output="screen"/>
+
+</launch>

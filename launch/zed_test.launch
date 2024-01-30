@@ -1,0 +1,27 @@
+<launch xmlns="http://www.ros.org/reload_launch">
+  <arg name="namespace" default="device1" />
+
+  <group ns="$(arg namespace)">
+    <!-- Launch zed2i.launch -->
+    <include file="$(find zed_wrapper)/launch/zed2i.launch"/>
+
+    <!-- Launch rtabmap.launch with arguments -->
+    <include file="$(find rtabmap_ros)/launch/rtabmap.launch">
+      <arg name="stereo" value="true"/>
+      <arg name="left_image_topic" value="/$(arg namespace)/zed2i/zed_node/left/image_rect_color"/>
+      <arg name="right_image_topic" value="/$(arg namespace)/zed2i/zed_node/right/image_rect_color"/>
+      <arg name="left_camera_info_topic" value="/$(arg namespace)/zed2i/zed_node/left/camera_info"/>
+      <arg name="right_camera_info_topic" value="/$(arg namespace)/zed2i/zed_node/right/camera_info"/>
+      <arg name="frame_id" value="base_link"/>
+      <arg name="rtabmap_args" value="-d"/>
+      <arg name="wait_imu_to_init" value="true"/>
+      <arg name="imu_topic" value="/$(arg namespace)/zed2i/zed_node/imu/data"/>
+      <!-- <arg name="imu_topic" value="/camera/imu"/> -->
+    </include>
+  </group>
+
+
+    
+  
+
+</launch>

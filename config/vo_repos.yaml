@@ -1,0 +1,22 @@
+PROJECT
+git@gitlab.iit.it:hrii/vision/visual-odometry/hrii_vo.git: noetic-devel
+DEPENDENCIES
+git@gitlab.iit.it:hrii/robotics/common/hrii_dummy_fsm.git: noetic-devel
+git@gitlab.iit.it:hrii/robotics/franka/franka_ros.git: position-admittance-control (846f4f9)
+git@gitlab.iit.it:hrii/robotics/franka/hrii_franka.git: noetic-devel (ea5de16)
+git@gitlab.iit.it:hrii/robotics/grippers/hrii_franka_gripper.git: noetic-devel (334f02f)
+git@gitlab.iit.it:hrii/robotics/common/hrii_robot_controllers.git: noetic-devel (5c4c40b)
+git@gitlab.iit.it:hrii/robotics/common/hrii_robot_interface.git: noetic-devel (9251f75)
+git@gitlab.iit.it:hrii/robotics/common/hrii_robot_msgs.git: noetic-devel (51f6ba0)
+git@gitlab.iit.it:hrii/planning/hrii_trajectory_planner.git: noetic-devel (4fcfce4)
+git@gitlab.iit.it:hrii/general/hrii_utils.git: noetic-devel (8a66afd)
+# git@github.com:stereolabs/zed-ros-wrapper.git: master (50dda07) 
+# git@github.com:introlab/rtabmap_ros.git: master (1bf27fb)
+git@gitlab.iit.it:hrii/robotics/franka/hrii_franka.git: noetic-devel (c77edd2)
+git@gitlab.iit.it:hrii/robotics/grippers/hrii_franka_gripper.git: noetic-devel (334f02f)
+git@gitlab.iit.it:hrii/general/hrii_gazebo_utils.git: noetic-devel (3e47b9a3)
+git@gitlab.iit.it:hrii/robotics/common/hrii_robot_controllers.git: noetic-devel (e847eb0)
+git@gitlab.iit.it:hrii/robotics/common/hrii_robot_interface.git: noetic-devel (39b92e3)
+git@gitlab.iit.it:hrii/robotics/common/hrii_robot_msgs.git: noetic-devel (3837d40)
+git@gitlab.iit.it:hrii/planning/hrii_trajectory_planner.git: noetic-devel (1336228)
+git@gitlab.iit.it:hrii/general/hrii_utils.git: noetic-devel (d39e001)

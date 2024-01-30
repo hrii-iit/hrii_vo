@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<launch>
+
+    <!-- General parameters -->
+    <arg name="interface_type" default="$(optenv INTERFACE_TYPE SIMULATION)"/>
+    <arg name="launch_rviz" default="true"/>
+
+    <!-- General simulation parameters -->
+    <arg name="launch_gazebo_gui" default="true"/>
+
+    <!-- General robot parameters -->
+    <arg name="robot_id" default="franka_a"/>
+    <arg name="robot_model" default="franka"/>
+    <!-- <arg name="launch_gripper" default="franka_gripper"/> -->
+    <arg name="launch_gripper" default="no_gripper"/>
+    <arg name="launch_interactive_marker" default="false"/>
+
+    <!-- Robot hardware parameters -->
+    <arg name="robot_ip" default="$(optenv ROBOT_ARM_IP 172.16.0.101)"/>
+
+    <!-- Load cartesian impedance generic controller-->
+    <include file="$(find hrii_fixed_base_robot_controllers)/launch/cartesian_impedance_controller.launch" pass_all_args="true"/>
+
+    <group ns="$(arg robot_id)">
+
+        <!-- <node name="rqt_reconfigure" pkg="rqt_reconfigure" type="rqt_reconfigure" required="false" /> -->
+
+        <!-- Trajectory planner -->
+        <include file="$(find hrii_trajectory_planner)/launch/trajectory_handler.launch">
+            <arg name="trajectory_planner_type" value="QUINTIC_POL"/>
+            <arg name="inertial_frame_name" value="$(arg robot_id)_franka_base_link"/>
+            <arg name="moving_frame_name" value="$(arg robot_id)_franka_EE"/>
+            <arg name="desired_pose_topic" value="cartesian_impedance_controller/equilibrium_pose"/>
+            <arg name="debug_mode" value="true"/>
+        </include>
+
+        <!-- Finite State Machine -->
+        <!-- <node name="dummy_fsm_fixed_manipulator" pkg="hrii_dummy_fsm" type="dummy_fsm_fixed_manipulator" required="false" output="screen"/> -->
+
+    </group>
+
+</launch>

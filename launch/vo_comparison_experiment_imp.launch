@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<launch>
+
+    <!-- General parameters -->
+    <arg name="interface_type" default="$(optenv INTERFACE_TYPE SIMULATION)"/>
+    <arg name="launch_rviz" default="true"/>
+
+    <!-- General simulation parameters -->
+    <arg name="launch_gazebo_gui" default="true"/>
+
+    <!-- General robot parameters -->
+    <arg name="robot_id" default="franka_a"/>
+    <arg name="robot_model" default="franka"/>
+    <arg name="launch_gripper" default="no_gripper"/>
+    <!-- <arg name="launch_gripper" default="no_gripper"/> -->
+    <arg name="launch_interactive_marker" default="false"/>
+
+    <!-- Robot hardware parameters -->
+    <arg name="robot_ip" default="$(optenv ROBOT_ARM_IP 172.16.0.101)"/>
+    <arg name="controller_args" default="--impedance-filtering 0
+                                        --cartesian-stiffness-trans 1500
+                                        --cartesian-stiffness-rot 40
+                                        --nullspace-stiffness 0
+                                        --logging-option 1"/> <!-- Other options - e.g.: logging-path /home/user/Desktop/ -->
+
+    <!-- Load cartesian impedance generic controller-->
+
+    <include file="$(find hrii_fixed_base_robot_controllers)/launch/cartesian_impedance_controller.launch" pass_all_args="true"/>
+
+    <group ns="$(arg robot_id)">
+
+        <!-- <node name="rqt_reconfigure" pkg="rqt_reconfigure" type="rqt_reconfigure" required="false" /> -->
+
+        <!-- Trajectory planner -->
+        <include file="$(find hrii_trajectory_planner)/launch/trajectory_handler.launch">
+            <arg name="trajectory_planner_type" value="QUINTIC_POL"/>
+            <arg name="inertial_frame_name" default="$(arg robot_id)_franka_base_link"/>
+            <arg name="moving_frame_name" default="$(arg robot_id)_franka_EE"/>
+            <arg name="desired_pose_topic" default="cartesian_impedance_controller/equilibrium_pose"/>
+            <arg name="debug_mode" default="true"/>
+        </include>
+
+        <!-- Finite State Machine -->
+        <node name="three_directional_planar_fsm" pkg="hrii_vo" type="square_planar" required="false" output="screen"/>
+
+        <!-- Logging node -->
+        <node name="logging_node" pkg="hrii_vo" type="logging_node" required="false" output="screen"/>
+
+    </group>
+
+</launch>

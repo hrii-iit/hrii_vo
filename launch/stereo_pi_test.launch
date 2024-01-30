@@ -1,0 +1,7 @@
+<launch>
+    <include file="$(find hrii_vo)/launch/stereo_pi.launch" />
+
+    <node pkg="hrii_vo" type="vis.py" name="pose_stamped_subscriber" output="screen"/>
+
+
+</launch>
