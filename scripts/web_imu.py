@@ -3,6 +3,7 @@ import socket
 import struct
 import rospy
 from sensor_msgs.msg import Imu
+import numpy as np
 
 rospy.init_node('image_publisher')
 # Define UDP server IP address and port number
@@ -42,4 +43,4 @@ while True:
     pub.publish(imu)
     rate.sleep()
     # Print the received IMU data
-    print(f"Acceleration: ({ax:.2f}, {ay:.2f}, {az:.2f}) | Gyro: ({gx:.2f}, {gy:.2f}, {gz:.2f})")
+    # print(f"Acceleration: ({ax:.2f}, {ay:.2f}, {az:.2f}) | Gyro: ({gx:.2f}, {gy:.2f}, {gz:.2f})")
