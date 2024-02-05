@@ -15,9 +15,15 @@ for zed2i running, cuda is required. Follow the guide on, https://github.com/ste
 
 ```
 
-### Usage
-Launch the experiment by running:
+### Usage:
 ```bash
+''' Examine the contents of the "teleop_interface_all.launch" launch file and make necessary modifications based on your specific requirements and the designated topics for manipulation and locomotion commands. For instances where a Raspberry Pi 4 is employed, execute two scripts located in the "rpi_files" folder on the RPI, operating within the Raspbian OS.
+
+It is essential to note that UDP is the chosen protocol for image transfer, and you must configure your communication settings, taking into account the relevant IP addresses.
+
+Other necessary launch files are discussed below for other cameras.
+
+'''
 roslaunch hrii_vo vo_comparison_experiment.launch   #franka_motion
 
 roslaunch hrii_vo All_exp_VO.launch    ##used to run rgbd and zed2i camera for odometry test
