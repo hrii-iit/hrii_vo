@@ -1,0 +1,22 @@
+    
+    
+<launch>
+<arg name="robot_id"  default="$(optenv ROBOT_ID moca_red)"/>
+<arg name="adm_interface_type" default="m5"/>
+    <group ns="$(arg robot_id)">
+    <group if="$(eval adm_interface_type == 'arduino')">
+        <node name="serial_node" pkg="rosserial_python" type="serial_node.py" required="false" output="screen">
+            <param name="port" value="/dev/ttyUSB_Arduino"/>
+            <param name="baud" value="57600"/>
+        </node>
+    </group>
+     <group if="$(eval adm_interface_type == 'm5')">
+        <node name="serial_node" pkg="rosserial_python" type="serial_node.py" required="false" output="screen"
+            args="tcp">
+        </node>
+    </group>
+    </group>
+    
+    <node pkg="hrii_vo" type="bridge.py" name="bridge" output="screen" />
+
+</launch>

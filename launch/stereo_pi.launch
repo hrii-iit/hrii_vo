@@ -2,6 +2,8 @@
 
     <!-- Launch rpi_odom.launch -->
     <include file="$(find hrii_vo)/launch/rpi_odom.launch" />
+
+    
     <!-- Launch stereo_image_proc -->
     <node pkg="stereo_image_proc" type="stereo_image_proc" name="stereo_image_proc" ns="stereo">
         <remap from="left/image_raw" to="/left/image_raw" />
@@ -9,6 +11,7 @@
         <remap from="left/camera_info" to="/left/camera_info" />
         <remap from="right/camera_info" to="/right/camera_info" />
     </node>
+    
     <include file="$(find rtabmap_launch)/launch/rtabmap.launch">
         <arg name="stereo" value="true" />
         <arg name="left_image_topic" value="/stereo/left/image_rect" />
@@ -17,11 +20,12 @@
         <arg name="right_camera_info_topic" value="/right/camera_info" />
         <arg name="frame_id" value="base_link" />
         <arg name="rtabmap_args" value="-d" />
-        <arg name="wait_imu_to_init" value="true" />
+        
+        <arg name="wait_imu_to_init" value="false" />
         <arg name="imu_topic" value="/rtabmap/imu" />
     </include>  
 
 
 
-
+<!-- <arg name="rtabmapviz" value="true" /> -->
 </launch>

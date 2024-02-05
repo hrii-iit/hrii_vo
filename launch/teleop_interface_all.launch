@@ -1,0 +1,15 @@
+<launch>
+    <!-- Define arguments and parameters -->
+    <arg name="robot_id" default="$(optenv ROBOT_ID moca_red)"/>
+    <arg name="camera_use" default="true" />
+    <param name="camera_use" value="$(arg camera_use)" />
+
+    <!-- Conditionally include stereo_pi.launch based on the value of camera_use -->
+    <include if="$(arg camera_use)" file="$(find hrii_vo)/launch/stereo_pi.launch" />
+
+    <!-- Start vis.py node -->
+    <node pkg="hrii_vo" type="vis.py" name="pose_stamped_subscriber" output="screen" ns="$(arg robot_id)" />
+
+    <!-- Include M5stack.launch -->
+    <include file="$(find hrii_vo)/launch/M5stack.launch" />
+</launch>
