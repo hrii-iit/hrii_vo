@@ -90,7 +90,10 @@ The repository includes source code for the experiments, accessible at [GitHub H
 
 ## Citation
 
+## Citation
+
 If you use this repository or its components in your research, please cite:
 
-H. Raei, J. M. Gandarias, E. De Momi, P. Balatti and A. Ajoudani, "A Multipurpose Interface for Close- and Far-Proximity Control of Mobile Collaborative Robots," 2024 10th IEEE RAS/EMBS International Conference for Biomedical Robotics and Biomechatronics (BioRob), Heidelberg, Germany, 2024, pp. 457-464, doi: 10.1109/BioRob60516.2024.10719833.
+H. Raei, J. M. Gandarias, E. De Momi, P. Balatti and A. Ajoudani, "A Multipurpose Interface for Close- and Far-Proximity Control of Mobile Collaborative Robots," 2024 10th IEEE RAS/EMBS International Conference for Biomedical Robotics and Biomechatronics (BioRob), Heidelberg, Germany, 2024, pp. 457-464. [doi: 10.1109/BioRob60516.2024.10719833](https://doi.org/10.1109/BioRob60516.2024.10719833)
+
 
