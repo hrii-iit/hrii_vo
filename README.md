@@ -88,10 +88,9 @@ For Raspberry Pi 4 setups (running Raspbian OS), execute the scripts located in 
 
 The repository includes source code for the experiments, accessible at [GitHub HRII-VO](https://github.com/hrii-iit/hrii_vo).
 
-## Publications
+## Citation
 
-This work is based on the research presented in *A Multipurpose Interface for Close- and Far-Proximity Control of Mobile Collaborative Robots* ([PDF](A_Multipurpose_Interface_for_Close-_and_Far-Proximity_Control_of_Mobile_Collaborative_Robots.pdf)).
+If you use this repository or its components in your research, please cite:
 
----
+H. Raei, J. M. Gandarias, E. De Momi, P. Balatti and A. Ajoudani, "A Multipurpose Interface for Close- and Far-Proximity Control of Mobile Collaborative Robots," 2024 10th IEEE RAS/EMBS International Conference for Biomedical Robotics and Biomechatronics (BioRob), Heidelberg, Germany, 2024, pp. 457-464, doi: 10.1109/BioRob60516.2024.10719833.
 
-Contributions and feedback are welcome to improve this repository.
