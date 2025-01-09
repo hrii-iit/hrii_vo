@@ -8,8 +8,10 @@ This repository provides tools for visual odometry experiments and teleoperation
 The HRII-VO framework is designed for conducting experiments with RGB-D and stereo cameras, focusing on visual odometry and remote teleoperation. It integrates **rtabmap_ros** for SLAM and visual-inertial odometry (VIO) algorithms, with additional configurations for ZED2i and RealSense D435i cameras.
 
 ### **GIF Demo**
-A quick GIF demonstration is also available:
+
 ![Demo GIF](0122_VD.gif)
+
+A quick GIF demonstration is also available:
 
 ## Key Features
 
